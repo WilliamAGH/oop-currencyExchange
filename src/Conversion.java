@@ -11,7 +11,6 @@ import java.util.Scanner;
  */
 
 public class Conversion {
-
     // Conversion rates (Partner 1: EUR to USD, USD to EUR)
     static final double EUR_TO_USD = 1.05;
     static final double USD_TO_EUR = 1 / 1.05;
