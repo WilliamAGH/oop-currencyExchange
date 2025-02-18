@@ -41,15 +41,8 @@ public class Conversion {
                     toCurrency = "EUR";
                     break;
                 case 3: // Partner 2: Currency A -> USD
-                    result = roundToTwoDecimals(partner2CurrencyToUsd(amount));
-                    fromCurrency = "Currency A";
-                    toCurrency = "USD";
                     break;
                 case 4: // Partner 2: USD -> Currency A
-                    result = roundToTwoDecimals(usdToPartner2Currency(amount));
-                    fromCurrency = "USD";
-                    toCurrency = "Currency A";
-                    break;
             }
 
             NumberFormat formatter = NumberFormat.getInstance(Locale.US);
@@ -92,14 +85,6 @@ public class Conversion {
     }
 
     // Partner 2: Implement the following methods and define constants for another currency
-
-    public static double partner2CurrencyToUsd(double amount) {
-        return Math.round(amount * 1_000_000) / 1_000_000.0; // Placeholder implementation
-    }
-
-    public static double usdToPartner2Currency(double amount) {
-        return Math.round(amount * 1_000_000) / 1_000_000.0; // Placeholder implementation
-    }
 
     /**
      * Displays a menu allowing the user to select a conversion type.
