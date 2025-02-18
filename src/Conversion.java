@@ -22,51 +22,66 @@ public class Conversion {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int choice = menu(); // Get menu choice
+        String exitMsg = "Exiting program now. Goodbye!";
+        int choice = menu();
 
         if (choice >= 1 && choice <= 4) {
+            NumberFormat formatter = NumberFormat.getInstance(Locale.US);
+            formatter.setMinimumFractionDigits(2);
+            formatter.setMaximumFractionDigits(2);
+
             System.out.print("Enter amount: ");
             double amount = scanner.nextDouble();
+            // Cleanup number formatting of input number after submitted
+            System.out.print("\033[1A"); // Move the cursor up one line
+            System.out.print("\033[2K"); // Clear the entire line
+            System.out.println("Entered amount: " + formatter.format(amount) + "    ");
+
             double result = 0.0;
             String fromCurrency = "";
             String toCurrency = "";
 
+            // Replace existing line using a carriage statement
             switch (choice) {
                 case 1: // Partner 1: EUR to USD
                     result = roundToTwoDecimals(eurToUsd(amount));
+                    System.out.println("Using an exchange rate of " + EUR_TO_USD + " EUR to USD");
                     fromCurrency = "EUR";
                     toCurrency = "USD";
                     break;
                 case 2: // Partner 1: USD to EUR
                     result = roundToTwoDecimals(usdToEur(amount));
+                    System.out.println("Using an exchange rate of " + USD_TO_EUR + " USD to EUR");
                     fromCurrency = "USD";
                     toCurrency = "EUR";
                     break;
                 case 3: // Partner 2: MMK to USD
                     result = roundToTwoDecimals(mmkToUsd(amount));
+                    System.out.println("Using an exchange rate of " + MMK_TO_USD + " MMK to USD");
                     fromCurrency = "MMK";
                     toCurrency = "USD";
                     break;
                 case 4: // Partner 2: USD to MMK
                     result = roundToTwoDecimals(usdToMmk(amount));
+                    System.out.println("Using an exchange rate of " + USD_TO_MMK + " USD to MMK");
                     fromCurrency = "USD";
                     toCurrency = "MMK";
             }
-
-            NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-            formatter.setMinimumFractionDigits(2);
-            formatter.setMaximumFractionDigits(2);
-            System.out.printf("Converted Amount: %s %s -> %s %s\n",
+            System.out.printf("Converted amount: %s %s -> %s %s\n",
                     formatter.format(amount), fromCurrency,
                     formatter.format(result), toCurrency);
+            System.out.println(exitMsg);
+        } else if (choice == 5) {
+            System.out.println(exitMsg);
+        } else {
+            System.out.println("Invalid choice. Please enter a number between 1 and 5.");
+            return;
         }
-
-        System.out.println("Exiting program. Goodbye!");
         scanner.close();
     }
 
     /**
-     * Converts EUR to USD.
+     * Converts EUR to USD
      * @param amount Amount in EUR
      * @return Equivalent amount in USD (calculated to six decimal places)
      */
@@ -75,7 +90,7 @@ public class Conversion {
     }
 
     /**
-     * Converts USD to EUR.
+     * Converts USD to EUR
      * @param amount Amount in USD
      * @return Equivalent amount in EUR (calculated to six decimal places)
      */
@@ -86,7 +101,7 @@ public class Conversion {
     // Partner 2: Implement the following methods and define constants for another currency
 
     /**
-     * Converts MMK to USD.
+     * Converts MMK to USD
      * @param amount Amount in MMK
      * @return Equivalent amount in USD (calculated to six decimal places)
      */
@@ -95,7 +110,7 @@ public class Conversion {
     }
 
     /**
-     * Converts USD to MMK.
+     * Converts USD to MMK
      * @param amount Amount in USD
      * @return Equivalent amount in MMK (calculated to six decimal places)
      */
@@ -104,7 +119,7 @@ public class Conversion {
     }
 
     /**
-     * Rounds a value to two decimal places for output.
+     * Rounds a value to two decimal places for output
      * @param value The calculated amount
      * @return The amount rounded to two decimal places
      */
@@ -114,9 +129,9 @@ public class Conversion {
 
 
     /**
-     * Displays a menu allowing the user to select a conversion type.
-     * Uses arrow key navigation or number input.
-     * @return User's menu choice.
+     * Displays a menu allowing the user to select a conversion type
+     * Uses arrow key navigation or number input
+     * @return User's menu choice
      */
     public static int menu() {
         Scanner scanner = new Scanner(System.in);
