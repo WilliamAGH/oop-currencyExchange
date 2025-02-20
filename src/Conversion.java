@@ -20,9 +20,9 @@ public class Conversion {
     static final double USD_TO_MMK = 2098; // 1 USD = 2,098 MMK
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner in = new Scanner(System.in); // instantiating a scanner object
         String exitMsg = "Exiting program now. Goodbye!";
-        int choice = menu();
+        int choice = menu(in);
 
         if (choice >= 1 && choice <= 4) {
             NumberFormat formatter = NumberFormat.getInstance(Locale.US);
@@ -30,7 +30,12 @@ public class Conversion {
             formatter.setMaximumFractionDigits(2);
 
             System.out.print("Enter amount: ");
-            double amount = scanner.nextDouble();
+            if (!in.hasNextDouble()) {
+                System.out.println("Invalid input! Please enter a valid number.");
+                return;
+            }
+            double amount = in.nextDouble();
+
             // Cleanup number formatting of input number after submitted
             System.out.print("\033[1A"); // Move the cursor up one line
             System.out.print("\033[2K"); // Clear the entire line
@@ -76,7 +81,7 @@ public class Conversion {
             System.out.println("Invalid choice. Please enter a number between 1 and 5.");
             return;
         }
-        scanner.close();
+        in.close();
     }
 
     /**
@@ -132,8 +137,8 @@ public class Conversion {
      * Uses arrow key navigation or number input
      * @return User's menu choice
      */
-    public static int menu() {
-        Scanner scanner = new Scanner(System.in);
+    public static int menu(Scanner in) {
+        int choice= 0;
         System.out.println("Select conversion type:");
         System.out.println("1. EUR -> USD");
         System.out.println("2. USD -> EUR");
@@ -142,6 +147,10 @@ public class Conversion {
         System.out.println("5. Exit");
         System.out.print("Enter choice: ");
 
-        return scanner.nextInt();
+        if (in.hasNextInt())
+            choice = in.nextInt();
+        else
+            in.next();
+        return choice;
     }
 }
